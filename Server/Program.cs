@@ -1,3 +1,5 @@
+global using Microsoft.EntityFrameworkCore;
+using BlazorAppEcommerce.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,14 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
+
+// Entity framework
+
+builder.Services.AddDbContext<DataContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+
+});
 
 var app = builder.Build();
 
