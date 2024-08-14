@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Pages\ProductList - Copy.razor.css" />
     <None Remove="Pages\ProductList.razor.css" />
   </ItemGroup>
 
