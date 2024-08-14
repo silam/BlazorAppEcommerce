@@ -1,5 +1,7 @@
 using BlazorAppEcommerce.Server.Controllers;
 using BlazorAppEcommerce.Server.Data;
+using BlazorAppEcommerce.Server.Products.Services;
+using BlazorAppEcommerce.Shared;
 using Microsoft.AspNetCore.Mvc;
 using UNet7BlazorAppEcomm.Shared;
 
@@ -12,20 +14,21 @@ namespace UNet7BlazorAppEcomm.Server.Controllers
 
 
         private static List<Product> Products = new List<Product>();
-        private readonly DataContext _context;
+        private readonly IProductService _productService;
         private readonly ILogger<WeatherForecastController> _logger;
 
        
-        public ProductController(DataContext context, ILogger<WeatherForecastController> logger)
+        public ProductController(IProductService productService, ILogger<WeatherForecastController> logger)
         {
-            _context = context;
+            _productService = productService;
             _logger = logger;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Product>>> GetProducts()
+        public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts()
         {
-            var products = await _context.Products.ToListAsync();
+            var products = await _productService.GetProductsAsync();
+            
             return Ok(products);
         }
     }
