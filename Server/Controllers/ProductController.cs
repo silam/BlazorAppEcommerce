@@ -17,7 +17,7 @@ namespace UNet7BlazorAppEcomm.Server.Controllers
         private readonly IProductService _productService;
         private readonly ILogger<WeatherForecastController> _logger;
 
-       
+
         public ProductController(IProductService productService, ILogger<WeatherForecastController> logger)
         {
             _productService = productService;
@@ -28,8 +28,17 @@ namespace UNet7BlazorAppEcomm.Server.Controllers
         public async Task<ActionResult<ServiceResponse<List<Product>>>> GetProducts()
         {
             var products = await _productService.GetProductsAsync();
-            
+
             return Ok(products);
+        }
+
+        [HttpGet("{productId}")]
+        //[Route("{id")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int productId)
+        {
+            var product = await _productService.GetProductAsync(productId);
+
+            return Ok(product);
         }
     }
 }

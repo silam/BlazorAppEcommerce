@@ -6,7 +6,7 @@
 
 @inject IProductService service
 
-
+<span>@message</span>
 @if ( product == null)
 {
     <div>Loading ...</div>
@@ -29,6 +29,7 @@ else
 }
 @code {
     private Product? product = null;
+    private string message;
 
     [Parameter]
     public int Id { get; set; }
@@ -36,6 +37,17 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        product = service.Products.Find(p => p.Id == Id);
+        message = "Loading...";
+        var result = await service.GetProduct(Id);
+
+        if ( result != null )
+        {
+            product = result;
+            message = string.Empty;
+        }
+        else
+        {
+            message = "Sorry product not found!";
+        }
     }
 }

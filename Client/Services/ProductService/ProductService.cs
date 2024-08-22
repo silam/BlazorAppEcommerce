@@ -15,6 +15,16 @@ namespace BlazorAppEcommerce.Client.Products.Services
         }
         public List<Product> Products {get; set; } = new List<Product>();
 
+        public Product Product;
+
+        //public async Task GetProduct(int productId)
+        //{
+        //    var result = await _client.GetFromJsonAsync<ServiceResponse<Product>>($"api/product/{productId}");
+        //    if (result != null)
+        //    {
+        //        Product = result?.Data;
+        //    }
+        //}
 
         public async Task GetProducts()
         {
@@ -24,6 +34,16 @@ namespace BlazorAppEcommerce.Client.Products.Services
                 Products = result.Data;
             }
 
+        }
+
+        public async Task<Product> GetProduct(int productId)
+        {
+            var result = await _client.GetFromJsonAsync<ServiceResponse<Product>>($"api/product/{productId}");
+            if (result != null)
+            {
+                Product = result?.Data;
+            }
+            return Product;
         }
     }
 }
